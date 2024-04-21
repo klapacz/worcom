@@ -1,0 +1,49 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import { formatDate } from "../../lib/utils";
+
+export async function getStaticPaths() {
+  const portfolios = await getCollection("portfolio");
+  return portfolios.map((portfolio) => ({
+    params: { slug: portfolio.slug },
+    props: portfolio,
+  }));
+}
+
+const portfolio = Astro.props;
+
+const { Content } = await portfolio.render();
+---
+
+<Layout title={`${portfolio.data.title} | Worcom`}>
+  <div class="relative container max-w-screen-md">
+    <article class="prose dark:prose-invert max-w-none prose-img:rounded-xl">
+      <Image
+        class="rounded-xl overflow-hidden my-6"
+        width={720}
+        height={360}
+        src={portfolio.data.thumbnail}
+        alt={portfolio.data.title}
+        transition:name={`img-${portfolio.slug}`}
+      />
+      <div class="flex items-center justify-between">
+        <span
+          class="font-medium text-muted-foreground"
+          transition:name={`date-${portfolio.slug}`}
+        >
+          {formatDate(portfolio.data.date)}
+        </span>
+      </div>
+      <h1
+        class="font-heading text-4xl my-4"
+        transition:name={`title-${portfolio.slug}`}
+      >
+        {portfolio.data.title}
+      </h1>
+      <hr class="my-6" />
+      <Content />
+    </article>
+  </div>
+</Layout>

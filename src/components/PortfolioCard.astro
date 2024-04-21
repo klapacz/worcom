@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { intlFormat } from "date-fns";
+
+type Props = CollectionEntry<"portfolio">;
+
+const portfolio = Astro.props;
+const url = `/portfolio/${portfolio.slug}/`;
+---
+
+<article class="group space-y-4">
+  <a
+    href={url}
+    class="flex h-52 group-hover:-translate-y-2 group-hover:shadow-xl transition duration-300"
+  >
+    <Image
+      loading="eager"
+      class="w-full h-full object-cover rounded-xl overflow-hidden"
+      width={720}
+      height={360}
+      src={portfolio.data.thumbnail}
+      alt={portfolio.data.title}
+      transition:name={`img-${portfolio.slug}`}
+    />
+  </a>
+
+  <div>
+    <a href={url} class="flex items-center justify-between">
+      <h2
+        class="font-heading text-xl md:text-2xl leading-snug line-clamp-3 group-hover:underline"
+        transition:name={"title-" + portfolio.slug}
+      >
+        {portfolio.data.title}
+      </h2>
+      <span
+        class="font-medium text-slate-700"
+        transition:name={"date-" + portfolio.slug}
+      >
+        {
+          intlFormat(portfolio.data.date, {
+            locale: "pl",
+          })
+        }
+      </span>
+    </a>
+  </div>
+</article>
