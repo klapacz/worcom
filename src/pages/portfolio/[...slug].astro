@@ -19,7 +19,7 @@ const { Content } = await portfolio.render();
 
 <Layout title={`${portfolio.data.title} | Worcom`}>
   <div class="relative container max-w-screen-md">
-    <article class="prose dark:prose-invert max-w-none prose-img:rounded-xl">
+    <article class="max-w-none">
       <Image
         class="rounded-xl overflow-hidden my-6"
         width={720}
@@ -43,7 +43,9 @@ const { Content } = await portfolio.render();
         {portfolio.data.title}
       </h1>
       <hr class="my-6" />
-      <Content />
+      <div class="prose prose-img:rounded-xl">
+        <Content />
+      </div>
     </article>
   </div>
 </Layout>
