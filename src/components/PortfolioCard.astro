@@ -1,7 +1,7 @@
 ---
+import { formatDate } from "@/lib/utils";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import { intlFormat } from "date-fns";
 
 type Props = CollectionEntry<"portfolio">;
 
@@ -28,8 +28,7 @@ const url = `/portfolio/${portfolio.slug}/`;
   <div>
     <a href={url} class="flex items-center justify-between">
       <h2
-        class="font-heading text-xl md:text-2xl leading-snug line-clamp-3 group-hover:underline"
-        transition:name={`title-${portfolio.slug}`}
+        class="text-xl font-semibold md:text-2xl leading-snug line-clamp-3 group-hover:underline"
       >
         {portfolio.data.title}
       </h2>
@@ -37,11 +36,7 @@ const url = `/portfolio/${portfolio.slug}/`;
         class="font-medium text-muted-foreground"
         transition:name={`date-${portfolio.slug}`}
       >
-        {
-          intlFormat(portfolio.data.date, {
-            locale: "pl",
-          })
-        }
+        {formatDate(portfolio.data.date)}
       </span>
     </a>
   </div>
